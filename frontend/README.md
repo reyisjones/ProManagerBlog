@@ -78,6 +78,7 @@ frontend/
 ## 🛠️ Tech Stack
 
 ### Core
+
 - **Vue.js 3**: Progressive JavaScript framework
 - **TypeScript**: Type-safe JavaScript
 - **Vite**: Fast build tool and dev server
@@ -85,18 +86,21 @@ frontend/
 - **Pinia**: State management library
 
 ### UI & Styling
+
 - **Tailwind CSS**: Utility-first CSS framework
 - **Headless UI**: Unstyled, accessible UI components
 - **Heroicons**: Beautiful hand-crafted SVG icons
 - **Chart.js**: Simple yet flexible charting library
 
 ### Development Tools
+
 - **Vitest**: Fast unit test framework
 - **ESLint**: Code linting
 - **Prettier**: Code formatting
 - **Storybook**: Component development environment
 
 ### Features
+
 - **Axios**: HTTP client for API calls
 - **VueUse**: Collection of essential Vue Composition Utilities
 - **Day.js**: Lightweight date library
@@ -108,27 +112,32 @@ frontend/
 ## 🚦 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. **Navigate to frontend directory**
+
    ```bash
    cd frontend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Configuration**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Update the `.env.local` file:
+
    ```env
    VITE_API_BASE_URL=http://localhost:5000/api/v1
    VITE_APP_TITLE=Project Management Blog
@@ -146,11 +155,12 @@ The application will be available at `http://localhost:3000`
 ## 🎨 UI Components
 
 ### Common Components
+
 ```vue
 <!-- Button Component -->
-<AppButton 
-  variant="primary" 
-  size="lg" 
+<AppButton
+  variant="primary"
+  size="lg"
   :loading="isLoading"
   @click="handleClick"
 >
@@ -170,18 +180,19 @@ The application will be available at `http://localhost:3000`
 ```
 
 ### Blog Components
+
 ```vue
 <!-- Blog Card -->
-<BlogCard 
-  :post="post" 
+<BlogCard
+  :post="post"
   :show-excerpt="true"
   @like="handleLike"
   @share="handleShare"
 />
 
 <!-- Comment Thread -->
-<CommentThread 
-  :comments="comments" 
+<CommentThread
+  :comments="comments"
   :can-reply="isAuthenticated"
   @add-comment="handleAddComment"
 />
@@ -190,6 +201,7 @@ The application will be available at `http://localhost:3000`
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 # Run all tests
 npm test
@@ -202,88 +214,92 @@ npm run test:coverage
 ```
 
 ### Test Structure
+
 ```typescript
 // Example component test
-import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
-import BlogCard from '@/components/blog/BlogCard.vue'
+import { mount } from "@vue/test-utils";
+import { describe, it, expect } from "vitest";
+import BlogCard from "@/components/blog/BlogCard.vue";
 
-describe('BlogCard', () => {
-  it('renders blog post correctly', () => {
+describe("BlogCard", () => {
+  it("renders blog post correctly", () => {
     const post = {
-      title: 'Test Post',
-      excerpt: 'Test excerpt',
-      author: 'Test Author'
-    }
-    
+      title: "Test Post",
+      excerpt: "Test excerpt",
+      author: "Test Author",
+    };
+
     const wrapper = mount(BlogCard, {
-      props: { post }
-    })
-    
-    expect(wrapper.text()).toContain('Test Post')
-    expect(wrapper.text()).toContain('Test excerpt')
-  })
-})
+      props: { post },
+    });
+
+    expect(wrapper.text()).toContain("Test Post");
+    expect(wrapper.text()).toContain("Test excerpt");
+  });
+});
 ```
 
 ## 🎯 State Management
 
 ### Pinia Store Example
+
 ```typescript
 // stores/blog.ts
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import type { Blog } from '@/types/blog'
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
+import type { Blog } from "@/types/blog";
 
-export const useBlogStore = defineStore('blog', () => {
-  const blogs = ref<Blog[]>([])
-  const currentBlog = ref<Blog | null>(null)
-  const loading = ref(false)
+export const useBlogStore = defineStore("blog", () => {
+  const blogs = ref<Blog[]>([]);
+  const currentBlog = ref<Blog | null>(null);
+  const loading = ref(false);
 
-  const publishedBlogs = computed(() => 
-    blogs.value.filter(blog => blog.published)
-  )
+  const publishedBlogs = computed(() =>
+    blogs.value.filter((blog) => blog.published),
+  );
 
   const fetchBlogs = async () => {
-    loading.value = true
+    loading.value = true;
     try {
-      const response = await api.get('/blogs')
-      blogs.value = response.data.data
+      const response = await api.get("/blogs");
+      blogs.value = response.data.data;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   return {
     blogs,
     currentBlog,
     loading,
     publishedBlogs,
-    fetchBlogs
-  }
-})
+    fetchBlogs,
+  };
+});
 ```
 
 ## 🚀 Performance Optimization
 
 ### Code Splitting
+
 ```typescript
 // router/index.ts
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: () => import('@/views/Home.vue')
+    path: "/",
+    name: "Home",
+    component: () => import("@/views/Home.vue"),
   },
   {
-    path: '/blog/:slug',
-    name: 'BlogDetail',
-    component: () => import('@/views/BlogDetail.vue')
-  }
-]
+    path: "/blog/:slug",
+    name: "BlogDetail",
+    component: () => import("@/views/BlogDetail.vue"),
+  },
+];
 ```
 
 ### Lazy Loading
+
 ```vue
 <template>
   <Suspense>
@@ -297,49 +313,53 @@ const routes = [
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from "vue";
 
 const LazyComponent = defineAsyncComponent(
-  () => import('@/components/HeavyComponent.vue')
-)
+  () => import("@/components/HeavyComponent.vue"),
+);
 </script>
 ```
 
 ## 🔒 Authentication
 
 ### Route Guards
+
 ```typescript
 // router/guards.ts
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
 
 export const requireAuth = (to, from, next) => {
-  const authStore = useAuthStore()
-  
+  const authStore = useAuthStore();
+
   if (!authStore.isAuthenticated) {
-    next('/login')
+    next("/login");
   } else {
-    next()
+    next();
   }
-}
+};
 
 export const requireAdmin = (to, from, next) => {
-  const authStore = useAuthStore()
-  
+  const authStore = useAuthStore();
+
   if (!authStore.isAdmin) {
-    next('/unauthorized')
+    next("/unauthorized");
   } else {
-    next()
+    next();
   }
-}
+};
 ```
 
 ## 📱 Responsive Design
 
 ### Tailwind CSS Classes
+
 ```vue
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+    <div
+      class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+    >
       <!-- Card content -->
     </div>
   </div>
@@ -347,6 +367,7 @@ export const requireAdmin = (to, from, next) => {
 ```
 
 ### Mobile-First Approach
+
 ```css
 /* Base styles for mobile */
 .nav-menu {
@@ -364,6 +385,7 @@ export const requireAdmin = (to, from, next) => {
 ## 🎨 Theming
 
 ### CSS Custom Properties
+
 ```css
 :root {
   --color-primary: #3b82f6;
@@ -382,24 +404,26 @@ export const requireAdmin = (to, from, next) => {
 ## 📊 Analytics & Monitoring
 
 ### Performance Monitoring
+
 ```typescript
 // utils/performance.ts
 export const trackPageView = (pageName: string) => {
-  if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+  if (import.meta.env.VITE_ENABLE_ANALYTICS === "true") {
     // Analytics tracking code
   }
-}
+};
 
 export const trackEvent = (eventName: string, properties?: object) => {
-  if (import.meta.env.VITE_ENABLE_ANALYTICS === 'true') {
+  if (import.meta.env.VITE_ENABLE_ANALYTICS === "true") {
     // Event tracking code
   }
-}
+};
 ```
 
 ## 🔧 Build & Deployment
 
 ### Production Build
+
 ```bash
 # Build for production
 npm run build
@@ -409,6 +433,7 @@ npm run preview
 ```
 
 ### Docker Build
+
 ```bash
 # Build Docker image
 npm run docker:build
@@ -418,6 +443,7 @@ npm run docker:run
 ```
 
 ### Bundle Analysis
+
 ```bash
 # Analyze bundle size
 npm run analyze
@@ -426,6 +452,7 @@ npm run analyze
 ## 🧩 Storybook
 
 ### Component Documentation
+
 ```bash
 # Start Storybook
 npm run storybook
@@ -435,28 +462,29 @@ npm run build-storybook
 ```
 
 ### Story Example
+
 ```typescript
 // stories/Button.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3'
-import AppButton from '@/components/common/AppButton.vue'
+import type { Meta, StoryObj } from "@storybook/vue3";
+import AppButton from "@/components/common/AppButton.vue";
 
 const meta: Meta<typeof AppButton> = {
-  title: 'Common/Button',
+  title: "Common/Button",
   component: AppButton,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    variant: 'primary',
-    children: 'Button',
+    variant: "primary",
+    children: "Button",
   },
-}
+};
 ```
 
 ## 🤝 Contributing
@@ -468,6 +496,7 @@ export const Primary: Story = {
 5. Ensure all tests pass
 
 ### Code Style
+
 - Use TypeScript for type safety
 - Follow Vue 3 Composition API patterns
 - Use Tailwind CSS for styling

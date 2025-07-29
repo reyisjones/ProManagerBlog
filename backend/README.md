@@ -1,6 +1,7 @@
 # Project Management Blog - Backend API
 
-RESTful API backend for the Project Management Blog application built with Node.js, Express, and MongoDB.
+RESTful API backend for the Project Management Blog application built with
+Node.js, Express, and MongoDB.
 
 ## 🚀 Features
 
@@ -79,28 +80,33 @@ backend/
 ## 🚦 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - MongoDB (local or MongoDB Atlas)
 - Git
 
 ### Installation
 
 1. **Navigate to backend directory**
+
    ```bash
    cd backend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Configuration**
+
    ```bash
    cp .env.example .env
    ```
-   
+
    Update the `.env` file with your configuration:
+
    ```env
    NODE_ENV=development
    PORT=5000
@@ -123,6 +129,7 @@ The API will be available at `http://localhost:5000`
 ## 📚 API Endpoints
 
 ### Authentication
+
 ```
 POST   /api/auth/register     # Register new user
 POST   /api/auth/login        # User login
@@ -133,6 +140,7 @@ PUT    /api/auth/reset/:token # Reset password
 ```
 
 ### Blog Posts
+
 ```
 GET    /api/blogs             # Get all blog posts
 GET    /api/blogs/:id         # Get single blog post
@@ -144,6 +152,7 @@ GET    /api/blogs/category/:category # Get posts by category
 ```
 
 ### Comments
+
 ```
 GET    /api/blogs/:id/comments        # Get comments for a post
 POST   /api/blogs/:id/comments        # Add comment to post
@@ -152,6 +161,7 @@ DELETE /api/comments/:id              # Delete comment (auth required)
 ```
 
 ### Reports & Analytics
+
 ```
 GET    /api/reports/summary           # Get blog summary stats
 GET    /api/reports/popular-tags      # Get popular tags
@@ -159,6 +169,7 @@ GET    /api/reports/post-analytics    # Get post analytics
 ```
 
 ### Users (Admin only)
+
 ```
 GET    /api/users                     # Get all users
 GET    /api/users/:id                 # Get single user
@@ -169,6 +180,7 @@ DELETE /api/users/:id                 # Delete user
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 # Run all tests
 npm test
@@ -181,6 +193,7 @@ npm run test:coverage
 ```
 
 ### Test Structure
+
 ```javascript
 // Example test file
 describe('Blog API', () => {
@@ -190,10 +203,8 @@ describe('Blog API', () => {
 
   describe('GET /api/blogs', () => {
     it('should return all blog posts', async () => {
-      const res = await request(app)
-        .get('/api/blogs')
-        .expect(200);
-      
+      const res = await request(app).get('/api/blogs').expect(200);
+
       expect(res.body.success).toBe(true);
       expect(res.body.data).toBeInstanceOf(Array);
     });
@@ -204,30 +215,34 @@ describe('Blog API', () => {
 ## 🔒 Security Features
 
 ### Authentication & Authorization
+
 - JWT-based authentication
 - Role-based access control (Admin/User)
 - Password hashing with bcrypt
 - Secure password reset flow
 
 ### Input Validation
+
 - Request validation with Joi
 - MongoDB injection prevention
 - XSS protection
 - Parameter pollution prevention
 
 ### Security Headers
+
 - Helmet.js for security headers
 - CORS configuration
 - Rate limiting
 - Request size limits
 
 ### Example Security Middleware
+
 ```javascript
 // Rate limiting
 const rateLimit = require('express-rate-limit');
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
 });
 
 // Input sanitization
@@ -238,17 +253,20 @@ app.use(mongoSanitize());
 ## 📈 Performance Optimization
 
 ### Database
+
 - MongoDB indexing
 - Query optimization
 - Pagination for large datasets
 - Connection pooling
 
 ### Caching
+
 - Response compression
 - ETags for conditional requests
 - Static file caching
 
 ### Monitoring
+
 - Request logging with Morgan
 - Error tracking with Winston
 - Performance metrics collection
@@ -256,6 +274,7 @@ app.use(mongoSanitize());
 ## 🐳 Docker Support
 
 ### Dockerfile
+
 ```dockerfile
 FROM node:18-alpine
 
@@ -274,6 +293,7 @@ CMD ["npm", "start"]
 ```
 
 ### Build and Run
+
 ```bash
 # Build Docker image
 docker build -t pm-blog-backend .
@@ -285,9 +305,11 @@ docker run -p 5000:5000 --env-file .env pm-blog-backend
 ## 📖 API Documentation
 
 ### Swagger/OpenAPI
+
 API documentation is available at `/api-docs` when running the server.
 
 ### Generate Documentation
+
 ```bash
 npm run docs
 ```
@@ -295,11 +317,13 @@ npm run docs
 ## 🌱 Database Seeding
 
 ### Seed Sample Data
+
 ```bash
 npm run seed
 ```
 
 This will create:
+
 - Sample blog posts
 - Categories
 - Sample users
@@ -320,6 +344,7 @@ npm run security:audit # Check for security vulnerabilities
 ## 🚀 Deployment
 
 ### Environment Variables for Production
+
 ```env
 NODE_ENV=production
 PORT=5000
@@ -329,7 +354,9 @@ CORS_ORIGIN=https://yourdomain.com
 ```
 
 ### Process Management
+
 Consider using PM2 for production:
+
 ```bash
 npm install -g pm2
 pm2 start server.js --name "pm-blog-api"
@@ -338,12 +365,14 @@ pm2 start server.js --name "pm-blog-api"
 ## 📊 Monitoring & Logging
 
 ### Log Levels
+
 - **Error**: Application errors
 - **Warn**: Warning messages
 - **Info**: General information
 - **Debug**: Debug information
 
 ### Log Format
+
 ```json
 {
   "timestamp": "2025-01-01T12:00:00.000Z",

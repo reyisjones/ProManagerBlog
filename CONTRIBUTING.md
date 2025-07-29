@@ -35,12 +35,14 @@ This project and everyone participating in it is governed by our Code of Conduct
 ### Development Setup
 
 1. **Fork the repository**
+
    ```bash
    git clone https://github.com/your-username/project-management-blog.git
    cd project-management-blog
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    cd backend && npm install
@@ -48,6 +50,7 @@ This project and everyone participating in it is governed by our Code of Conduct
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp backend/.env.example backend/.env
    cp frontend/.env.example frontend/.env.local
@@ -84,6 +87,7 @@ We welcome several types of contributions:
 ### Code Style
 
 #### Backend (Node.js)
+
 - Use ESLint and Prettier configurations
 - Follow RESTful API design principles
 - Write meaningful commit messages
@@ -103,6 +107,7 @@ const createBlog = async (req, res) => {
 ```
 
 #### Frontend (Vue.js)
+
 - Use TypeScript for type safety
 - Follow Vue 3 Composition API patterns
 - Use Tailwind CSS for styling
@@ -113,20 +118,21 @@ const createBlog = async (req, res) => {
 <script setup lang="ts">
 interface Props {
   /** The blog post to display */
-  post: BlogPost
+  post: BlogPost;
   /** Whether to show the full content */
-  showFullContent?: boolean
+  showFullContent?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showFullContent: false
-})
+  showFullContent: false,
+});
 </script>
 ```
 
 ### Git Workflow
 
 1. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -137,6 +143,7 @@ const props = withDefaults(defineProps<Props>(), {
    - Update documentation as needed
 
 3. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "feat: add new blog filtering feature"
@@ -160,6 +167,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 ```
 
 **Types:**
+
 - `feat`: A new feature
 - `fix`: A bug fix
 - `docs`: Documentation only changes
@@ -170,6 +178,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 - `chore`: Changes to the build process or auxiliary tools
 
 **Examples:**
+
 ```
 feat(blog): add search functionality
 fix(auth): resolve JWT token expiration issue
@@ -204,23 +213,28 @@ test(blog): add tests for blog creation
 
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Tests pass locally
 - [ ] New tests added for new functionality
 - [ ] Manual testing completed
 
 ## Screenshots (if applicable)
+
 [Add screenshots here]
 
 ## Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Documentation updated
@@ -341,6 +355,7 @@ npm run test:coverage
 ## 🏆 Recognition
 
 Contributors will be recognized in:
+
 - README.md contributors section
 - Release notes
 - Annual contributor highlights

@@ -9,7 +9,7 @@ module.exports = {
   bracketSpacing: true,
   arrowParens: 'avoid',
   endOfLine: 'lf',
-  
+
   // Override for specific file types
   overrides: [
     {

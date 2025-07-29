@@ -3,21 +3,18 @@ module.exports = {
   env: {
     node: true,
     es2022: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:node/recommended',
     'plugin:security/recommended',
-    'prettier'
+    'prettier',
   ],
-  plugins: [
-    'node',
-    'security'
-  ],
+  plugins: ['node', 'security'],
   parserOptions: {
     ecmaVersion: 2022,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   rules: {
     // General
@@ -26,7 +23,7 @@ module.exports = {
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'prefer-const': 'error',
     'no-var': 'error',
-    
+
     // Node.js specific
     'node/no-unpublished-require': 'off',
     'node/no-missing-require': 'error',
@@ -35,7 +32,7 @@ module.exports = {
     'node/prefer-global/buffer': ['error', 'always'],
     'node/prefer-promises/fs': 'error',
     'node/prefer-promises/dns': 'error',
-    
+
     // Security
     'security/detect-object-injection': 'warn',
     'security/detect-non-literal-regexp': 'warn',
@@ -49,26 +46,26 @@ module.exports = {
     'security/detect-non-literal-require': 'warn',
     'security/detect-possible-timing-attacks': 'warn',
     'security/detect-pseudoRandomBytes': 'error',
-    
+
     // Best practices
-    'eqeqeq': 'error',
-    'curly': 'error',
+    eqeqeq: 'error',
+    curly: 'error',
     'no-throw-literal': 'error',
     'no-return-await': 'error',
     'require-await': 'error',
     'no-await-in-loop': 'warn',
-    'prefer-promise-reject-errors': 'error'
+    'prefer-promise-reject-errors': 'error',
   },
   overrides: [
     {
       files: ['**/*.test.js', '**/*.spec.js', '**/tests/**/*.js'],
       env: {
-        jest: true
+        jest: true,
       },
       rules: {
         'node/no-unpublished-require': 'off',
-        'security/detect-non-literal-fs-filename': 'off'
-      }
-    }
-  ]
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+  ],
 };
