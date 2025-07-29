@@ -31,10 +31,7 @@ const logger = winston.createLogger({
       level: 'error',
       maxsize: 5242880, // 5MB
       maxFiles: 5,
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-      )
+      format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     }),
 
     // Write all logs with level 'info' and below to combined.log
@@ -42,47 +39,46 @@ const logger = winston.createLogger({
       filename: path.join(__dirname, '../../logs/combined.log'),
       maxsize: 5242880, // 5MB
       maxFiles: 5,
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-      )
-    })
+      format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+    }),
   ],
   // Handle exceptions and rejections
   exceptionHandlers: [
     new winston.transports.File({
       filename: path.join(__dirname, '../../logs/exceptions.log'),
       maxsize: 5242880,
-      maxFiles: 3
-    })
+      maxFiles: 3,
+    }),
   ],
   rejectionHandlers: [
     new winston.transports.File({
       filename: path.join(__dirname, '../../logs/rejections.log'),
       maxsize: 5242880,
-      maxFiles: 3
-    })
-  ]
+      maxFiles: 3,
+    }),
+  ],
 });
 
 // If we're not in production, log to the console as well
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple(),
-      winston.format.printf(({ timestamp, level, message, ...meta }) => {
-        return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
-      })
-    )
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple(),
+        winston.format.printf(({ timestamp, level, message, ...meta }) => {
+          return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
+        })
+      ),
+    })
+  );
 }
 
 // Create a stream object for Morgan middleware
 logger.stream = {
-  write: (message) => {
+  write: message => {
     logger.info(message.trim());
-  }
+  },
 };
 
 module.exports = logger;

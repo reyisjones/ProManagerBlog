@@ -11,7 +11,7 @@ const errorHandler = (err, req, res, next) => {
     url: req.url,
     method: req.method,
     ip: req.ip,
-    userAgent: req.get('User-Agent')
+    userAgent: req.get('User-Agent'),
   });
 
   // Mongoose bad ObjectId
@@ -19,7 +19,7 @@ const errorHandler = (err, req, res, next) => {
     const message = 'Resource not found';
     error = {
       message,
-      statusCode: 404
+      statusCode: 404,
     };
   }
 
@@ -28,16 +28,18 @@ const errorHandler = (err, req, res, next) => {
     const message = 'Duplicate field value entered';
     error = {
       message,
-      statusCode: 400
+      statusCode: 400,
     };
   }
 
   // Mongoose validation error
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map(val => val.message).join(', ');
+    const message = Object.values(err.errors)
+      .map(val => val.message)
+      .join(', ');
     error = {
       message,
-      statusCode: 400
+      statusCode: 400,
     };
   }
 
@@ -46,7 +48,7 @@ const errorHandler = (err, req, res, next) => {
     const message = 'Invalid token';
     error = {
       message,
-      statusCode: 401
+      statusCode: 401,
     };
   }
 
@@ -54,7 +56,7 @@ const errorHandler = (err, req, res, next) => {
     const message = 'Token expired';
     error = {
       message,
-      statusCode: 401
+      statusCode: 401,
     };
   }
 
@@ -63,7 +65,7 @@ const errorHandler = (err, req, res, next) => {
     const message = 'File too large';
     error = {
       message,
-      statusCode: 400
+      statusCode: 400,
     };
   }
 
@@ -72,7 +74,7 @@ const errorHandler = (err, req, res, next) => {
     const message = 'Too many requests, please try again later';
     error = {
       message,
-      statusCode: 429
+      statusCode: 429,
     };
   }
 
@@ -82,7 +84,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json({
     success: false,
     error: message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 };
 

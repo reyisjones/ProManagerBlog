@@ -20,7 +20,7 @@ exports.protect = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({
         success: false,
-        error: 'Not authorized to access this route'
+        error: 'Not authorized to access this route',
       });
     }
 
@@ -34,7 +34,7 @@ exports.protect = async (req, res, next) => {
       if (!user) {
         return res.status(401).json({
           success: false,
-          error: 'Not authorized to access this route'
+          error: 'Not authorized to access this route',
         });
       }
 
@@ -42,7 +42,7 @@ exports.protect = async (req, res, next) => {
       if (user.status !== 'active') {
         return res.status(401).json({
           success: false,
-          error: 'Account is not active'
+          error: 'Account is not active',
         });
       }
 
@@ -51,14 +51,14 @@ exports.protect = async (req, res, next) => {
     } catch (err) {
       return res.status(401).json({
         success: false,
-        error: 'Not authorized to access this route'
+        error: 'Not authorized to access this route',
       });
     }
   } catch (error) {
     logger.error('Auth middleware error:', error);
     return res.status(500).json({
       success: false,
-      error: 'Server error'
+      error: 'Server error',
     });
   }
 };
@@ -69,14 +69,14 @@ exports.authorize = (...roles) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        error: 'Not authorized to access this route'
+        error: 'Not authorized to access this route',
       });
     }
 
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        error: `User role '${req.user.role}' is not authorized to access this route`
+        error: `User role '${req.user.role}' is not authorized to access this route`,
       });
     }
     next();
@@ -131,7 +131,7 @@ exports.checkOwnership = (resourceModel, resourceIdParam = 'id') => {
       if (!resource) {
         return res.status(404).json({
           success: false,
-          error: 'Resource not found'
+          error: 'Resource not found',
         });
       }
 
@@ -145,7 +145,7 @@ exports.checkOwnership = (resourceModel, resourceIdParam = 'id') => {
       if (resource.author && resource.author.toString() !== req.user._id.toString()) {
         return res.status(403).json({
           success: false,
-          error: 'Not authorized to access this resource'
+          error: 'Not authorized to access this resource',
         });
       }
 
@@ -155,7 +155,7 @@ exports.checkOwnership = (resourceModel, resourceIdParam = 'id') => {
       logger.error('Ownership check error:', error);
       return res.status(500).json({
         success: false,
-        error: 'Server error'
+        error: 'Server error',
       });
     }
   };

@@ -13,12 +13,10 @@ describe('Blog API', () => {
       name: 'Test User',
       email: 'test@example.com',
       password: 'password123',
-      role: 'admin'
+      role: 'admin',
     };
 
-    const userResponse = await request(app)
-      .post('/api/v1/auth/register')
-      .send(userData);
+    const userResponse = await request(app).post('/api/v1/auth/register').send(userData);
 
     authToken = userResponse.body.token;
     userId = userResponse.body.data.user._id;
@@ -34,7 +32,7 @@ describe('Blog API', () => {
           category: 'basics',
           author: userId,
           published: true,
-          publishedAt: new Date()
+          publishedAt: new Date(),
         },
         {
           title: 'Test Blog 2',
@@ -42,22 +40,20 @@ describe('Blog API', () => {
           category: 'methodologies',
           author: userId,
           published: true,
-          publishedAt: new Date()
+          publishedAt: new Date(),
         },
         {
           title: 'Draft Blog',
           content: 'This is draft content',
           category: 'tools',
           author: userId,
-          published: false
-        }
+          published: false,
+        },
       ]);
     });
 
     it('should return all published blogs', async () => {
-      const response = await request(app)
-        .get('/api/v1/blogs')
-        .expect(200);
+      const response = await request(app).get('/api/v1/blogs').expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data).toHaveLength(2);
@@ -67,9 +63,7 @@ describe('Blog API', () => {
     });
 
     it('should filter blogs by category', async () => {
-      const response = await request(app)
-        .get('/api/v1/blogs?category=basics')
-        .expect(200);
+      const response = await request(app).get('/api/v1/blogs?category=basics').expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data).toHaveLength(1);
@@ -77,9 +71,7 @@ describe('Blog API', () => {
     });
 
     it('should search blogs by title', async () => {
-      const response = await request(app)
-        .get('/api/v1/blogs?search=Test Blog 1')
-        .expect(200);
+      const response = await request(app).get('/api/v1/blogs?search=Test Blog 1').expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data).toHaveLength(1);
@@ -87,9 +79,7 @@ describe('Blog API', () => {
     });
 
     it('should paginate results', async () => {
-      const response = await request(app)
-        .get('/api/v1/blogs?page=1&limit=1')
-        .expect(200);
+      const response = await request(app).get('/api/v1/blogs?page=1&limit=1').expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data).toHaveLength(1);
@@ -108,15 +98,13 @@ describe('Blog API', () => {
         category: 'basics',
         author: userId,
         published: true,
-        publishedAt: new Date()
+        publishedAt: new Date(),
       });
       blogId = blog._id;
     });
 
     it('should return a single blog by ID', async () => {
-      const response = await request(app)
-        .get(`/api/v1/blogs/${blogId}`)
-        .expect(200);
+      const response = await request(app).get(`/api/v1/blogs/${blogId}`).expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data.title).toBe('Single Blog Test');
@@ -125,17 +113,13 @@ describe('Blog API', () => {
 
     it('should return 404 for non-existent blog', async () => {
       const fakeId = '507f1f77bcf86cd799439011';
-      const response = await request(app)
-        .get(`/api/v1/blogs/${fakeId}`)
-        .expect(404);
+      const response = await request(app).get(`/api/v1/blogs/${fakeId}`).expect(404);
 
       expect(response.body.success).toBe(false);
     });
 
     it('should return 400 for invalid blog ID', async () => {
-      const response = await request(app)
-        .get('/api/v1/blogs/invalid-id')
-        .expect(400);
+      const response = await request(app).get('/api/v1/blogs/invalid-id').expect(400);
 
       expect(response.body.success).toBe(false);
     });
@@ -148,7 +132,7 @@ describe('Blog API', () => {
         content: 'This is content for the new test blog',
         category: 'methodologies',
         tags: ['test', 'new'],
-        published: true
+        published: true,
       };
 
       const response = await request(app)
@@ -167,20 +151,17 @@ describe('Blog API', () => {
       const blogData = {
         title: 'Unauthorized Blog',
         content: 'This should not be created',
-        category: 'basics'
+        category: 'basics',
       };
 
-      const response = await request(app)
-        .post('/api/v1/blogs')
-        .send(blogData)
-        .expect(401);
+      const response = await request(app).post('/api/v1/blogs').send(blogData).expect(401);
 
       expect(response.body.success).toBe(false);
     });
 
     it('should validate required fields', async () => {
       const invalidBlogData = {
-        content: 'Missing title and category'
+        content: 'Missing title and category',
       };
 
       const response = await request(app)
@@ -202,7 +183,7 @@ describe('Blog API', () => {
         content: 'Original content',
         category: 'basics',
         author: userId,
-        published: false
+        published: false,
       });
       blogId = blog._id;
     });
@@ -211,7 +192,7 @@ describe('Blog API', () => {
       const updateData = {
         title: 'Updated Blog Title',
         content: 'Updated content',
-        published: true
+        published: true,
       };
 
       const response = await request(app)
@@ -227,7 +208,7 @@ describe('Blog API', () => {
 
     it('should not allow unauthorized updates', async () => {
       const updateData = {
-        title: 'Unauthorized Update'
+        title: 'Unauthorized Update',
       };
 
       const response = await request(app)
@@ -248,7 +229,7 @@ describe('Blog API', () => {
         content: 'This blog will be deleted',
         category: 'basics',
         author: userId,
-        published: true
+        published: true,
       });
       blogId = blog._id;
     });
@@ -267,9 +248,7 @@ describe('Blog API', () => {
     });
 
     it('should require authentication for deletion', async () => {
-      const response = await request(app)
-        .delete(`/api/v1/blogs/${blogId}`)
-        .expect(401);
+      const response = await request(app).delete(`/api/v1/blogs/${blogId}`).expect(401);
 
       expect(response.body.success).toBe(false);
     });
