@@ -1,6 +1,9 @@
 # Backend Dockerfile
 FROM node:18-alpine AS backend-base
 
+# Install pnpm
+RUN npm install -g pnpm@8.15.0
+
 # Set working directory
 WORKDIR /app
 
@@ -8,7 +11,7 @@ WORKDIR /app
 COPY backend/package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN pnpm install --frozen-lockfile --prod && pnpm store prune
 
 # Copy source code
 COPY backend/ .
@@ -32,10 +35,13 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD node healthcheck.js
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
 
 # Frontend Dockerfile
 FROM node:18-alpine AS frontend-build
+
+# Install pnpm
+RUN npm install -g pnpm@8.15.0
 
 WORKDIR /app
 
@@ -43,13 +49,13 @@ WORKDIR /app
 COPY frontend/package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY frontend/ .
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM nginx:alpine AS frontend-production
