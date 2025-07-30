@@ -123,6 +123,9 @@ importers:
       '@heroicons/vue':
         specifier: ^2.2.0
         version: 2.2.0(vue@3.5.18)
+      '@types/prismjs':
+        specifier: ^1.26.5
+        version: 1.26.5
       '@vueuse/core':
         specifier: ^13.6.0
         version: 13.6.0(vue@3.5.18)
@@ -148,7 +151,7 @@ importers:
         specifier: ^2.3.0
         version: 2.3.1(typescript@5.7.3)(vue@3.5.18)
       prismjs:
-        specifier: ^1.29.0
+        specifier: ^1.30.0
         version: 1.30.0
       vue:
         specifier: ^3.5.13
@@ -2153,6 +2156,10 @@ packages:
     dependencies:
       undici-types: 7.8.0
     dev: true
+
+  /@types/prismjs@1.26.5:
+    resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
+    dev: false
 
   /@types/react@19.1.9:
     resolution: {integrity: sha512-WmdoynAX8Stew/36uTSVMcLJJ1KRh6L3IZRx1PZ7qJtBqT3dYTgyDTx8H1qoRghErydW7xw9mSJ3wS//tCRpFA==}
