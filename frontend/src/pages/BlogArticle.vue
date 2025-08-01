@@ -1,11 +1,40 @@
-import { defineComponent, ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+<template>
+  <div class="content-wrapper" style="min-height:100vh;">
+    <div class="main-panel">
+      <div class="content">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <div class="card card-user" style="margin-top:2rem;">
+              <div class="card-body">
+                <h1 class="card-title text-center mb-2">{{ articleMeta.title }}</h1>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted">By {{ articleMeta.author }}</span>
+                  <span class="badge bg-info">{{ formattedDate }}</span>
+                </div>
+                <div class="mb-2">
+                  <span
+                    v-for="tag in articleMeta.tags"
+                    :key="tag"
+                    class="badge bg-secondary me-1"
+                  >{{ tag }}</span>
+                </div>
+                <div class="markdown-body" v-html="html"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
 import MarkdownIt from 'markdown-it';
 import prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
-import '@/assets/black-dashboard.css'; // Assumes Black Dashboard CSS is imported globally
+import '@/assets/black-dashboard.css';
 
-// Metadata extracted from Prompt2.md
 const articleMeta = {
   title: 'Boosting Development Productivity with AI & Modern Tooling',
   author: 'Admin',
@@ -13,7 +42,6 @@ const articleMeta = {
   createdAt: '2025-07-29T10:00:00Z',
 };
 
-// Markdown content extracted from Prompt2.md (with escaped backticks and code blocks)
 const markdownContent = `# Boosting Development Productivity with AI & Modern Tooling
 
 In today’s fast-paced tech environment, development teams must embrace smarter tools and automation to deliver high-quality software faster. Below are key strategies and tools that project managers and developers can adopt today.
@@ -95,54 +123,59 @@ Set up:
 Modern development is no longer about just writing code — it’s about creating efficient, maintainable ecosystems. Start small, and evolve your tooling with your team’s needs.
 `;
 
-export default defineComponent({
-  name: 'BlogArticle',
-  setup() {
-    const route = useRoute();
-    const html = ref('');
-    const md = new MarkdownIt({
-      html: true,
-      linkify: true,
-      highlight: (str, lang) => {
-        if (lang && prism.languages[lang]) {
-          try {
-            return `<pre class="language-${lang}"><code>${prism.highlight(str, prism.languages[lang], lang)}</code></pre>`;
-          } catch (__) {}
-        }
-        return `<pre class="language-plain"><code>${md.utils.escapeHtml(str)}</code></pre>`;
-      },
-    });
-
-    onMounted(() => {
-      html.value = md.render(markdownContent);
-    });
-
-    return () => (
-      <div class="content-wrapper" style="min-height:100vh;">
-        <div class="main-panel">
-          <div class="content">
-            <div class="row justify-content-center">
-              <div class="col-lg-8 col-md-10">
-                <div class="card card-user" style="margin-top:2rem;">
-                  <div class="card-body">
-                    <h1 class="card-title text-center mb-2">{articleMeta.title}</h1>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <span class="text-muted">By {articleMeta.author}</span>
-                      <span class="badge bg-info">{new Date(articleMeta.createdAt).toLocaleDateString()}</span>
-                    </div>
-                    <div class="mb-2">
-                      {articleMeta.tags.map(tag => (
-                        <span class="badge bg-secondary me-1" key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                    <div class="markdown-body" v-html={html.value}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+const html = ref('');
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  highlight: (str, lang) => {
+    if (lang && prism.languages[lang]) {
+      try {
+        return `<pre class="language-${lang}"><code>${prism.highlight(str, prism.languages[lang], lang)}</code></pre>`;
+      } catch (__) {}
+    }
+    return `<pre class="language-plain"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   },
 });
+
+onMounted(() => {
+  html.value = md.render(markdownContent);
+});
+
+const formattedDate = computed(() => {
+  return new Date(articleMeta.createdAt).toLocaleDateString();
+});
+</script>
+
+<style scoped>
+.markdown-body {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #222;
+}
+.markdown-body pre {
+  background: #282a36;
+  color: #f8f8f2;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.markdown-body code {
+  background: #f5f5f5;
+  color: #e01a76;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+.markdown-body th, .markdown-body td {
+  border: 1px solid #ddd;
+  padding: 0.5em 1em;
+}
+.markdown-body th {
+  background: #f0f0f0;
+}
+</style>
