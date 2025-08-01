@@ -29,10 +29,10 @@ project-management-blog/
 ├── frontend/                # Vue.js 3 SPA
 │   ├── src/
 │   │   ├── components/      # Vue components
-│   │   ├── views/           # Page views
-│   │   ├── router/          # Vue Router configuration
-│   │   ├── store/           # State management
-│   │   └── utils/           # Frontend utilities
+│   │   ├── pages/           # Page components (Vue SFCs)
+│   │   ├── assets/          # Static assets (CSS, images)
+│   │   ├── router.ts        # Vue Router configuration
+│   │   └── App.vue          # Root Vue component
 │   ├── tests/               # Frontend tests
 │   ├── package.json
 │   └── vite.config.js
@@ -58,20 +58,22 @@ project-management-blog/
 
 ### Frontend
 
-- **Framework**: Vue.js 3 (Composition API)
+- **Framework**: Vue.js 3 (Composition API, Single File Components)
 - **Routing**: Vue Router 4
 - **State Management**: Pinia
 - **Styling**: Tailwind CSS
 - **Build Tool**: Vite
 - **Testing**: Vitest + Vue Test Utils
-- **Charts**: Chart.js
+- **Code Quality**: ESLint, Prettier, Husky
+- **Package Manager**: pnpm (monorepo support)
 
 ### DevOps & Tools
 
 - **Linting**: ESLint + Prettier
-- **Git Hooks**: Husky
+- **Git Hooks**: Husky + Lint-Staged
 - **CI/CD**: GitHub Actions
 - **Containerization**: Docker
+- **Monorepo**: pnpm workspaces
 - **Monitoring**: Morgan (logging), Winston
 - **Performance**: Compression middleware
 
@@ -197,12 +199,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 ### Why pnpm?
 
-This project uses **pnpm** instead of npm for faster and more efficient dependency management:
-
-- **Speed**: Up to 2x faster installations than npm
-- **Disk Space**: Efficient storage with content-addressable storage
-- **Strict**: Better dependency resolution and no phantom dependencies
-- **Monorepo Support**: Built-in workspace support with `pnpm-workspace.yaml`
+This project uses **pnpm** for fast, efficient, and strict dependency management, with built-in monorepo support via `pnpm-workspace.yaml`. All frontend and backend dependencies are managed in a single workspace for consistency and speed.
 
 ### Development Commands
 
@@ -238,10 +235,11 @@ pnpm install:all            # Reinstall all dependencies
 
 ### Project Structure Benefits
 
-- **Monorepo**: Shared dependencies and consistent tooling
+- **Monorepo**: Shared dependencies and consistent tooling (pnpm workspaces)
 - **Type Safety**: TypeScript across frontend and backend
 - **Fast Builds**: Vite for frontend, optimized Node.js for backend
 - **Hot Reload**: Instant feedback during development
+- **Modern Vue**: All pages and components use Vue 3 SFCs (no TSX/JSX)
 
 ## 🧪 Testing
 
@@ -258,6 +256,11 @@ pnpm run test:frontend
 # Run tests with coverage
 pnpm run test:coverage
 ```
+
+### Migration Notes
+
+- The frontend has been fully migrated from TSX/JSX to Vue 3 Single File Components (SFCs) for maintainability and best practices.
+- All routing and page logic is now handled via `.vue` files in `src/pages/`.
 
 ## 🔒 Security
 
